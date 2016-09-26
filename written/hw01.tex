@@ -1,0 +1,79 @@
+\documentclass[14pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{listings}
+
+\title{Algorithms and Data - Problem Set 1}
+\author{Nick Ippoliti}
+\date{September 20, 2016}
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\section{Three Arrays}
+\subsection{a)}
+A brute force algorithm would be simply to iterate over each element $a_i$ in 
+list $a$ and pair each of those with every element $b_j$ in list $b$. Then it
+would be necessay for each pair $(a_i, b_j)$ to iterate over each element $c_k$
+in list $c$ to see if $a_i + b_j = c_k$.
+
+The running time of this algorithm would be O($n^3$).
+
+% TODO
+\subsection{b)}
+\begin{lstlisting}
+
+\end{lstlisting}
+
+\section{}
+\subsection{a)}
+A brute force algorithm would be to iterate over each element $a_i$ in list $a$
+and for each of the remaining elements $a_j, j \neq i$, calculate the difference
+between them. If that difference $\Delta_{new}$ is less than the current 
+smallest difference $\Delta_{current}$, set $\Delta_{current} =  \Delta_{new}$.
+Once that iteration has been completed for all $a_i$ in $a$, yield 
+$\Delta_{current}$.
+
+The running time of this algorithm would be O($n^2$)
+
+\subsection{b)}
+An efficient algorithm would be to first sort the elements from smallest to
+largest, which would take O($n \log n$) time. Set $\Delta_{current} = \infty$.
+Then, for each element $a_i$ in list $a$, calculate the difference
+$\Delta_{new}$ between $a_i$ and $a_{i + 1}$. If
+$\Delta_{new} < \Delta_{current}$, set $\Delta_{current} = \Delta_{new}$.
+When this iteration is done, yield $\Delta_{current}$.
+
+The running time of this would be O($n \log n$) time, since the iteration would
+only take O($n$).
+
+\section{Order of Growth}
+Since $\displaystyle {n \choose k} = \Theta(n^k)$, $\displaystyle {3n \choose n} = \Theta((3n)^n)$
+
+% TODO
+\section{Inequalities by Induction}
+
+% TODO
+\section{Matching the Bipartite Graphs}
+
+\section{Ordered search with penalty}
+A search method that is somewhere between these two methods would be Chunk
+Search. The algorithm works by checking the first element $a_0$ in list $a$,
+then jumping $\sqrt n$ indices, and checking that element $a_i$. This
+repeats until a red element is found, in which case it jumps back to the last
+green element and checks the elements one by one until it finds the index $m$
+at which the elements transition from green to red.
+
+This incurs at most \$2 of penalty, and is O($\sqrt n$) runtime.
+
+% TODO
+\section{Growth of Functions}
+\subsection{a)}
+$f = \Omega(g)$, due to the fact that the power $n$ will grow faster than
+$\log n$ as $n$ goes to $\infty$, and cause $f(n) \geq g(n) \forall n > n_0$.
+
+\subsection{b)}
+$f = O(g)$, since $\displaystyle \lim_{x \to \infty} \frac{\log^2 x}{^3\sqrt x} = 0$
+\end{document}
