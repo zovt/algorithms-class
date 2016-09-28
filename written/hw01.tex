@@ -2,18 +2,19 @@
 \usepackage[utf8]{inputenc}
 \usepackage{parskip}
 \usepackage{listings}
+\usepackage{amsmath}
 
-\title{Algorithms and Data - Problem Set 1}
+\title{Algorithms and Data --- Problem Set 1}
 \author{Nick Ippoliti}
 \date{September 20, 2016}
 
 \begin{document}
 \begin{titlepage}
-\maketitle
+	\maketitle
 \end{titlepage}
 
 \section{Three Arrays}
-\subsection{a)}
+\subsection{a.}
 A brute force algorithm would be simply to iterate over each element $a_i$ in 
 list $a$ and pair each of those with every element $b_j$ in list $b$. Then it
 would be necessay for each pair $(a_i, b_j)$ to iterate over each element $c_k$
@@ -22,13 +23,13 @@ in list $c$ to see if $a_i + b_j = c_k$.
 The running time of this algorithm would be O($n^3$).
 
 % TODO
-\subsection{b)}
+\subsection{b.}
 \begin{lstlisting}
 
 \end{lstlisting}
 
 \section{}
-\subsection{a)}
+\subsection{a.}
 A brute force algorithm would be to iterate over each element $a_i$ in list $a$
 and for each of the remaining elements $a_j, j \neq i$, calculate the difference
 between them. If that difference $\Delta_{new}$ is less than the current 
@@ -38,7 +39,7 @@ $\Delta_{current}$.
 
 The running time of this algorithm would be O($n^2$)
 
-\subsection{b)}
+\subsection{b.}
 An efficient algorithm would be to first sort the elements from smallest to
 largest, which would take O($n \log n$) time. Set $\Delta_{current} = \infty$.
 Then, for each element $a_i$ in list $a$, calculate the difference
@@ -46,8 +47,8 @@ $\Delta_{new}$ between $a_i$ and $a_{i + 1}$. If
 $\Delta_{new} < \Delta_{current}$, set $\Delta_{current} = \Delta_{new}$.
 When this iteration is done, yield $\Delta_{current}$.
 
-The running time of this would be O($n \log n$) time, since the iteration would
-only take O($n$).
+The running time of this would be $O(n \log n)$ time, since the iteration would
+only take $O(n)$.
 
 \section{Order of Growth}
 Since $\displaystyle {n \choose k} = \Theta(n^k)$, $\displaystyle {3n \choose n} = \Theta((3n)^n)$
@@ -55,8 +56,21 @@ Since $\displaystyle {n \choose k} = \Theta(n^k)$, $\displaystyle {3n \choose n}
 % TODO
 \section{Inequalities by Induction}
 
-% TODO
 \section{Matching the Bipartite Graphs}
+$M$ is the matching of $V$. $|M|$ = n. \\
+$P$ is the graph $(P_V, P_E)$ where $|P_E| = 2n - 1$ and each edge $P_Ei$ in 
+$P_E$ . \\
+
+Base Case
+$|X| = |Y| = n = 2$ \\
+$X = (X_1, X_2)$ \\
+$Y = (Y_1, Y_2)$ \\
+$E = ((X_1, Y_1), (X_1, Y_2), (X_2, Y_1), (X_2, Y_2))$
+$M = ((X_1, Y_1), (X_2, Y_2))$
+$|M| = 2 = n$
+\begin{equation}
+	
+\end{equation}
 
 \section{Ordered search with penalty}
 A search method that is somewhere between these two methods would be Chunk
@@ -66,14 +80,24 @@ repeats until a red element is found, in which case it jumps back to the last
 green element and checks the elements one by one until it finds the index $m$
 at which the elements transition from green to red.
 
-This incurs at most \$2 of penalty, and is O($\sqrt n$) runtime.
+This incurs at most \$2 of penalty, and is $O(\sqrt n)$ runtime.
 
-% TODO
 \section{Growth of Functions}
-\subsection{a)}
+\subsection{a.}
 $f = \Omega(g)$, due to the fact that the power $n$ will grow faster than
 $\log n$ as $n$ goes to $\infty$, and cause $f(n) \geq g(n) \forall n > n_0$.
 
-\subsection{b)}
+\subsection{b.}
 $f = O(g)$, since $\displaystyle \lim_{x \to \infty} \frac{\log^2 x}{^3\sqrt x} = 0$
+
+\subsection{c.}
+\begin{equation}
+	\begin{split}
+		f(n) = 100n + \frac{n^2 + 1}{\sqrt n} & = 100n + \frac{n^2}{\sqrt n} + \frac{1}{\sqrt n} \\
+		& = 100n + n^{3/2} + 1/{\sqrt n} \\
+		& = n^{3/2} + 100n + 1/{\sqrt n}
+	\end{split}
+\end{equation}
+Therefore, $f = \Theta(g)$.
+
 \end{document}
