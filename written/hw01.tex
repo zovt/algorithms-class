@@ -20,13 +20,18 @@ list $a$ and pair each of those with every element $b_j$ in list $b$. Then it
 would be necessay for each pair $(a_i, b_j)$ to iterate over each element $c_k$
 in list $c$ to see if $a_i + b_j = c_k$.
 
-The running time of this algorithm would be O($n^3$).
+The running time of this algorithm would be $O(n^3)$.
 
-% TODO
 \subsection{b.}
-\begin{lstlisting}
+A smarter algorithm would be to sort column $c$ from smallest to largest. Then,
+iterate over each element $a_i$ in list $a$ and sum it with each element $b_j$
+in list $b$. Then take that sum and perform a binary search for it in list $c$.
+If it exists, return true. Otherwise, do the same for the next sum until out of
+pairs.
 
-\end{lstlisting}
+This running time would be $O(n^2 \log n)$. The sort would take $n \log n$
+time, but that is only performed once. The iteration and lookup step would take
+$n^2 \log n$ time since a binary search is $O(\log n)$.
 
 \section{}
 \subsection{a.}
@@ -41,7 +46,7 @@ The running time of this algorithm would be O($n^2$)
 
 \subsection{b.}
 An efficient algorithm would be to first sort the elements from smallest to
-largest, which would take O($n \log n$) time. Set $\Delta_{current} = \infty$.
+largest, which would take $O(n \log n)$ time. Set $\Delta_{current} = \infty$.
 Then, for each element $a_i$ in list $a$, calculate the difference
 $\Delta_{new}$ between $a_i$ and $a_{i + 1}$. If
 $\Delta_{new} < \Delta_{current}$, set $\Delta_{current} = \Delta_{new}$.
@@ -53,24 +58,44 @@ only take $O(n)$.
 \section{Order of Growth}
 Since $\displaystyle {n \choose k} = \Theta(n^k)$, $\displaystyle {3n \choose n} = \Theta((3n)^n)$
 
-% TODO
 \section{Inequalities by Induction}
+\subsection{a.}
+$$
+n^2 \geq 10n + 5 \\
+(n + 1)^2 \geq 10(n + 1) + 5 \\
+n^2 + 2n + 1 \geq 10(n + 1) + 5 \\
+n^2 + 2n + 1 \geq 10(n + 1) + 5 + (10n + 5) \\
+n^2 + 2n + 1 \geq 10n + 15 + (10n + 5) \\
+n^2 + 2n + 1 \geq 20n + 20 \\
+n^2 + 2n + 1 \geq 20n + 20 \\
+n^2 + 2n + 1 \geq 20(n + 1) \\
+(n+1)(n+1) \geq 20(n + 1) \\
+n + 1 \geq 20 \\
+n \geq 19 \\
+$$
 
+$n_0 = 19$
+
+%TODO
 \section{Matching the Bipartite Graphs}
-$M$ is the matching of $V$. $|M|$ = n. \\
-$P$ is the graph $(P_V, P_E)$ where $|P_E| = 2n - 1$ and each edge $P_Ei$ in 
-$P_E$ . \\
+$P(n):$
 
-Base Case
-$|X| = |Y| = n = 2$ \\
-$X = (X_1, X_2)$ \\
-$Y = (Y_1, Y_2)$ \\
-$E = ((X_1, Y_1), (X_1, Y_2), (X_2, Y_1), (X_2, Y_2))$
-$M = ((X_1, Y_1), (X_2, Y_2))$
-$|M| = 2 = n$
-\begin{equation}
-	
-\end{equation}
+If $T_n = (U, F)$ is the minimum spanning tree of $G$ with $2n$ vertices and 
+$M = (F_i) \forall i \in (1, 3, ..., |T_n|)$, then $M$ is a matching of $G$.
+
+$|T_n| = 2n - 1$ \\
+$|M| = \frac{|T_n| + 1}{2} = \frac{2n - 1 + 1}{2} = \frac{2n}{2} = n$ \\
+
+Base Case: $P(n); n = 2$ \\
+$|T_2| = 2(2) - 1 = 3$ \\
+$|M| = \frac{|T_2| + 1}{2} = \frac{4}{2} = 2$ \\
+
+Inductive case: \\
+Assuming $P(n)$ holds, then
+
+$|T_{n + 1}| = 2(n + 1) - 1 = 2n + 2 - 1 = 2n + 1$ \\
+$|M| = \frac{|T_{n + 1}| + 1}{2} = \frac{(1 + |T_{n}| + 1)}{2} 
+= \frac{2 + |T_n|}{2} = 1 + |T_n| = 1 + n$
 
 \section{Ordered search with penalty}
 A search method that is somewhere between these two methods would be Chunk
