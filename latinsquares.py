@@ -1,11 +1,16 @@
 import sys
 
+
 class Board:
-    def __init__(self, lines, board = None):
-        if board == None:
-            self.__size__ = len(lines)
+    def __init__(self, lines, board=None):
+        if board is None:
+            _lines = list(filter(lambda x: x != '\n', lines))
+            self.__size__ = len(_lines)
             self.__board__ = [[] for i in range(self.__size__)]
-            for (idx, line) in enumerate(lines):
+            for (idx, line) in enumerate(_lines):
+                if line == "\n":
+                    continue
+
                 split = line.split(' ')
                 nums = map(lambda x: int(x), split)
                 self.__board__[idx] = list(nums)
@@ -20,38 +25,45 @@ class Board:
     def set(self, x, y, val):
         self.__board__[y][x] = val
 
+    def get(self, x, y):
+        return self.__board__[y][x]
+
     def enumerate_possibilities(self, x, y):
         nums_in_row = list(filter(lambda x: x != 0, self.__board__[y]))
-        nums_in_col = list(filter(lambda x: x != 0, 
+        nums_in_col = list(filter(lambda x: x != 0,
             map(lambda row: row[x], self.__board__)))
 
         used = nums_in_row + nums_in_col
         return list(filter(lambda x: x not in used, range(1, self.__size__ + 1)))
 
     def try_solve(self, x, y):
-        # print("---------------------")
-        # print("{}".format(self))
-        # print("x: {}".format(x))
-        # print("y: {}".format(y))
+        # we are finished when y is out of the array bounds
+        if y == self.__size__:
+            return self
 
-        if x == self.__size__ - 1 and y == self.__size__ - 1:
-            return
+        cur_val = self.get(x, y)
 
         next_x = (x + 1) % (self.__size__)
         next_y = y if next_x > x else y + 1
 
-        if self.__board__[y][x] != 0:
-            self.try_solve(next_x, next_y)
+        # skip non-zero entries
+        if cur_val != 0:
+            return self.try_solve(next_x, next_y)
 
-        # print(" --- zero! --- ")
-
+        # gather the possible values at [x, y]
         possibilities = self.enumerate_possibilities(x, y)
-        # print(possibilities)
+
+        # for every possibility, set [x, y] equal to it and try to
+        # solve the puzzle from the next index on
         for possibility in possibilities:
             self.set(x, y, possibility)
-            self.try_solve(next_x, next_y)
+            res = self.try_solve(next_x, next_y)
+            if res is not None:
+                return res
 
-        self.set(x, y, 0)
+        # If we are out of possibilities, reset [x, y]
+        self.set(x, y, cur_val)
+        return None
 
     def solve(self):
         return self.try_solve(0, 0)
@@ -60,9 +72,8 @@ class Board:
 def main():
     lines = sys.stdin.readlines()
     board = Board(lines)
-    print(board)
-    board.solve()
-    
-    print(board)
+    solved = board.solve()
+
+    print(solved)
 
 main()
