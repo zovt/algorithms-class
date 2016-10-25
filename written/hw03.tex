@@ -1,0 +1,39 @@
+\documentclass[14pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{algorithm}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\title{Algorithms and Data --- Problem Set 3}
+\author{Nick Ippoliti}
+\date{October 25, 2016}
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\section{The Interval Scheduling Again}
+This approach is a greedy since it tries to make the locally optimal choice
+with each interval selection, i.e., it picks the one with the last start time
+that does not conflict with any of the others with the hope that by doing this
+repeatedly we arrive at a globally optimal solution.
+
+This does, in fact, yield an optimal solution. Let $I$ be a set of intervals.
+We first pick an interval $I_1$ with start time $S_1$ such that $S_1$ is 
+greater than all other start times. Then, we let $I'$ be a subset of $I$ such
+that no intervals in $I'$ intersect with $I_1$. We repeat the process using 
+$I'$, and continue repeating in this way until no intervals are left.
+
+Thus, in essence, we are picking intervals that begin closest to the maximum
+end time $E_{max}$ of $I$ and do not overlap any of our currently chosen 
+intervals. The fact that we are choosing the interval with the start time 
+closest to the maximum end time means that there can be other interval or
+combination of intervals that do not intersect our current choices and minimize
+the distance between their start time and the max end time. That is to say,
+choosing in this way will give us the maximum number of non-ovelapping 
+intervals in a given set of intervals.
+
+\end{document}
