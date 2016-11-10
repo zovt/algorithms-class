@@ -33,8 +33,8 @@ $f(n) \in O(n^{\log_4 5}) \implies T(n) \in \Theta(n^{\log_4 5})$
 \subsection{}
 $T(n) = 2T(n/4) + \sqrt{n}$ \\
 $f(n) = \sqrt{n}, a = 2, b = 4$ \\
-$c < 0.5$ \\
-$f(n) \in O(\sqrt{n}) \implies T(n) \in \Theta(\sqrt{n})$
+$c = 0.5$ \\
+$f(n) \in \Theta(\sqrt{n}) \implies T(n) \in \Theta(\sqrt{n}\log n)$
 
 \subsection{}
 $T(n) = 7T(n/2) + n^3$ \\
@@ -56,18 +56,31 @@ $\implies T(n) \in \Theta(\log n)$
 
 \section{A ``Hole'' in the Master Theorem}
 \subsection{}
+Yes, the Master Theorem can work here since it satisfies case 2.
 \subsection{}
-\begin{align*}
-T(n + 1) &= 4T((n + 1)/2) + (n+1)^2\log(n+1) \\
-&= 4T(n/2 + 1/2) + (n + 1)^2\log(n+1) \\
-&= 4(T(n/2) + T(1/2)) + (n^2 + 2n + 1)\log(n+1) \\
-&= 4T(n/2) + T(1/2) + n^2\log(n+1) + 2n\log(n+1) + \log(n+1) \\
-&= 4T(n/2) + 0 + n^2\log(n+1) + 2n\log(n+1) + \log(n+1) \\
-&= 4T(n/2) + n^2\log(n+1) + 2n\log(n+1) + \log(n+1) \\
-\implies T(n+1) &= O(4T(n/2) + n^2\log(n+1) + 2n\log(n+1) + \log(n+1)) \\
-&= O(n^2(
-\end{align*}
+$n = 2^k$ \\
+$2n = 2^{k+1}$ \\
+$T(2n) = 4T(2n/2) + (2n)^2\log(2n)$ \\
+$T(2n) = 4T(n) + (2n)^2\log(2n)$ \\
+$T(2n) = 4(n^2(\log n)^2) + (2n)^2\log(2n)$ \\
+$T(2n) = 4n^2(\log n)^2 + (2n)^2\log(2n)$ \\
+$T(2n) = (2n)^2(\log n)^2 + (2n)^2\log(2n)$ \\
+$T(2n) = (2n)^2(\log 2n + \log 2n)$ \\
+$T(2n) = (2n)^2(2(\log n)^2)$ \\
+$T(2n) = 2(n^2\log n)^2$ \\
+Thus, $T(n) \leq (n^2\log n)^2$ \\
+
 \subsection{}
+$n = 2^k$ \\
+$2n = 2^{k+1}$ \\
+$T(2n) = 4T(2n/2) + (2n)^2\log(2n)$ \\
+$T(2n) = 4T(n) + (2n)^2\log(2n)$ \\
+$T(2n) = 4(\frac{1}{3}n^2(\log n)^2) + (2n)^2\log(2n)$ \\
+$T(2n) = (\frac{1}{3})4n^2(\log n)^2) + 4n^2\log(2n)$ \\
+$T(2n) = (\frac{1}{3})4n^2(\log(n)^2 + \log(n)^2)$ \\
+$T(2n) = \frac{4}{3}n^2(\log(n)^2 + \log(n)^2)$ \\
+$T(2n) = \frac{8}{3}n^2\log(n)^2$ \\
+Thus, $T(n) \geq \frac{1}{3}n^2(\log n)^2$ \\
 
 \section{A Maximum}
 \subsection{}
@@ -76,11 +89,11 @@ that comes after it in the list, keeping track of the maximum sum.
 
 \subsection{}
 A more efficient algorithm is as follows. Split the list in half until it
-cannot be split any more. Then, at every level, find the maximumm of the 
-maximum value on the left, the maximum value on the right, or a sum spanning 
-the middle. To find the sum that spans the middle, on both sides start closest 
-to the middle and keep a running sum for every element up until the end, and 
-then use the maximum value. Once both sides are calculated like that, add them 
+cannot be split any more. Then, at every level, find the maximum of the maximum 
+value on the left, the maximum value on the right, or a sum spanning the 
+middle. To find the sum that spans the middle, on both sides start closest to 
+the middle and keep a running sum for every element up until the end, and then 
+use the maximum value. Once both sides are calculated like that, add them 
 together.
 
 By doing this, you can find the resulting maximum sum in $O(n\log n)$ time.
