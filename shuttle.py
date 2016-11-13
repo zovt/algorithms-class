@@ -7,25 +7,25 @@ def make_gadget(profit, weight):
 def parse_input(lines):
     profits = lines[1].split(',')
     weights = lines[2].split(',')
-    for i in range(0, len(profits)):
+    for i in range(len(profits)):
         yield make_gadget(int(profits[i]), int(weights[i]))
 
 def maximize_profit(gadgets, g_max_weight):
-    table = [[None for i in range(0, g_max_weight + 1)] for g in gadgets]
-    for num_items, row in enumerate(table):
+    table = [[None for i in range(g_max_weight + 1)] for g in gadgets]
+    for item_index, row in enumerate(table):
         for max_weight, weight in enumerate(row):
             if max_weight is 0: 
-                table[num_items][max_weight] = 0
+                table[item_index][max_weight] = 0
                 
-            elif num_items is 0:
-                table[num_items][max_weight] = 0
+            elif item_index is 0:
+                table[item_index][max_weight] = 0
             
-            elif max_weight <= gadgets[num_items]['weight']:
-                table[num_items][max_weight] = table[num_items - 1][max_weight]
+            elif max_weight <= gadgets[item_index]['weight']:
+                table[item_index][max_weight] = table[item_index - 1][max_weight]
             
             else:
-                table[num_items][max_weight] = max(gadgets[num_items]['profit'] + table[num_items - 1][max_weight - gadgets[num_items]['weight']],
-                        table[num_items - 1][max_weight])
+                table[item_index][max_weight] = max(gadgets[item_index]['profit'] + table[item_index - 1][max_weight - gadgets[item_index]['weight']],
+                        table[item_index - 1][max_weight])
 
     return table[len(table) - 1][g_max_weight]
 
