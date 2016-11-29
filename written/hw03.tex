@@ -36,4 +36,16 @@ the distance between their start time and the max end time. That is to say,
 choosing in this way will give us the maximum number of non-ovelapping 
 intervals in a given set of intervals.
 
+\section{Connected Components}
+In an undirected graph, a connected component is any maximal set of vertices
+with paths between them, i.e., there can only be more than one connected
+component if there are two vertices with no edge between them.
+
+Thus, if you have an undirected graph with $n$ vertices, with $k$ connected
+components, drawing an edge from any connected component to any other will
+increase the edge count e by 1 and decrease the number of connected components 
+by 1. Thus, if $n - k \geq e$, then $n - (k - 1) \geq e + 1$ and the inequality
+holds since we have balanced it via subtracting one from the left and adding 
+one to the right.
+
 \end{document}
