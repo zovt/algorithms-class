@@ -1,5 +1,5 @@
 # Fdb version 3
-["latex"] 1477509143 "hw03.tex" "hw03.dvi" "hw03" 1477509143
+["latex"] 1478746519 "hw04.tex" "hw04.dvi" "hw04" 1478746519
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1471317721 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1471317719 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1471317719 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -45,10 +45,10 @@
   "/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty" 1471317724 77028 c3eb00afb55a32bc13ca8da7f5234377 ""
   "/usr/share/texmf-dist/tex/latex/parskip/parskip.sty" 1471317724 2763 02a40cc5a32805c41d919cfbdba7e99a ""
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1471317729 31669 df537245012f3e5f05bdc55644b7a3df ""
-  "/var/lib/texmf/web2c/pdftex/latex.fmt" 1471380980 7252765 1510630c044819638399dbace2bc9936 ""
-  "hw03.aux" 1477509047 181 9f1ff63b24b0b24852f4662aec80a2d9 ""
-  "hw03.tex" 1477509143 2134 e2b3f5dab3b369e1a5f5004125f30162 ""
+  "/var/lib/texmf/web2c/pdftex/latex.fmt" 1477418475 7252766 ca6eb702e1b296fde1e9d6edd436ffd3 ""
+  "hw04.aux" 1478746519 1294 9673469a2a300f4aa45e78f1937f431d ""
+  "hw04.tex" 1478746518 4418 edbb64e9e46cda2839dfd377d4ac9669 ""
   (generated)
-  "hw03.log"
-  "hw03.dvi"
-  "hw03.aux"
+  "hw04.log"
+  "hw04.aux"
+  "hw04.dvi"
