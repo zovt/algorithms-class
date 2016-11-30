@@ -1,4 +1,5 @@
 import sys
+import time
 
 
 def parse_input(lines):
@@ -22,75 +23,104 @@ def parse_input(lines):
 
 
 def match(graph):
-    # initialize network flow graph
-    network_flow_graph = {}
-    for id, edges in graph.items():
-        if id <= 99:
-            network_flow_graph[id] = edges
-
-    # set up source and dest nodes
-    copy = dict(network_flow_graph)
-    network_flow_graph['source'] = []
-    network_flow_graph['dest'] = []
-    for id, edges in copy.items():
-        network_flow_graph['source'].append(id)
-
-        for edge in edges:
-            network_flow_graph[edge] = ['dest']
-
-    # check if there is a path between nodes
-    def check_path(source, sink):
-        path = []
+    def bfs(source, sink, capacities, residual_graph, residual, flows):
         parents = {}
         visited = set()
         queue = []
+        path_caps = {}
 
         parents[source] = None
+        path_caps[source] = float('inf')
         queue.append(source)
         visited.add(source)
 
         while len(queue) is not 0:
-            current = queue.pop()
+            current = queue.pop(0)
 
-            for edge in network_flow_graph[current]:
-                if edge not in visited:
-                    queue.append(edge)
-                    parents[edge] = current
-                    visited.add(edge)
+            for out in residual_graph[current]:
+                if out not in visited and residual[(current, out)] > 0:
+                    parents[out] = current
+                    path_caps[out] = min(path_caps[current],
+                            capacities[(current, out)] - flows[(current, out)])
+                    
+                    if out is not sink:
+                        queue.append(out)
+                    else:
+                        return path_caps[sink], parents
+                    
+        return 0, None
 
-        if sink in visited:
-            current = sink
-            while current in parents:
-                path.append(current)
-                current = parents[current]
+    # Edmonds-Karp
+    # init network flow graph
+    flow_graph = {}
+    flow_graph['source'] = []
+    flow_graph['dest'] = []
+    for n, e in graph.items():
+        if n <= 99:
+            flow_graph[n] = e
+            flow_graph['source'].append(n)
+        else:
+            flow_graph[n] = ['dest']
+            flow_graph['dest'].append(n)
             
-            path.reverse()
-            return (True, path)
-
-        return (False, None)
-
-
-    # Ford-Fulkerson
-    max_flow = 0
     flows = {}
-    for id, edges in network_flow_graph.items():
-        for edge in edges:
-            flows[(id, edge)] = 0
-
-    (is_path, path) = check_path('source', 'dest')
-    while is_path:
-        current_path_flow = float('inf')
-
-
-        (is_path, path) = check_path('source', 'dest')
-
-
+    for n, e in flow_graph.items():
+        for ep in e:
+            flows[(n, ep)] = 0
+            flows[(ep, n)] = 0
+            
+    # flows and capacities
+    capacities = {}
+    for n, e in flow_graph.items():
+        for ep in e:
+            capacities[(n, ep)] = 1
+            capacities[(ep, n)] = 1
+    
+    residual = dict(capacities)
+    residual_graph = dict(flow_graph)
+            
+    flow = 0
+    while True:
+        (min_cap, parents) = bfs('source', 'dest', capacities, residual_graph, residual, flows)
+        if min_cap is 0: break
+        
+        flow += min_cap
+            
+        current = 'dest'
+        while True:
+            if current is 'source': break
+            parent = parents[current]
+            
+            # add residual graph edges
+            if parent not in residual_graph:
+                residual_graph[parent] = []
+                
+            if current not in residual_graph:
+                residual_graph[current] = []
+                
+            if current not in residual_graph[parent]:
+                residual_graph[parent].append(current)
+                
+            if parent not in residual_graph[current]:
+                residual_graph[current].append(parent)
+            
+            # update flows and capacities
+            flows[(parent, current)] += min_cap
+            flows[(current, parent)] -= min_cap
+            residual[(parent, current)] -= min_cap
+            residual[(current, parent)] += min_cap
+            current = parents[current]
+    
+    out = {source: dest for (source, dest), weight in flows.items() if weight is 1 and source in graph and dest in graph}
+    
+    return (flow, out)
 
 def main():
     lines = sys.stdin.readlines()
     graph = parse_input(lines)
-    result = match(graph)
-    print(result)
+    (flow, result) = match(graph)
+    for i, j in result.items():
+        print('{},{}'.format(i, j))
 
 
 main()
